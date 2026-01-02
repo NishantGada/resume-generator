@@ -202,6 +202,7 @@ def build_resume(role):
         
         # Summary text as continuous paragraph (7.5pt, Georgia)
         summary_para = doc.add_paragraph()
+        summary_para.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
         summary_para.paragraph_format.space_before = Pt(4)
         summary_para.paragraph_format.space_after = Pt(0)
         summary_para.paragraph_format.line_spacing = 1.0
@@ -243,6 +244,7 @@ def build_resume(role):
         for exp in experience_items:
             # Job Title Line with RIGHT-ALIGNED dates
             job_para = doc.add_paragraph()
+            job_para.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
             job_para.paragraph_format.space_before = Pt(4)
             job_para.paragraph_format.space_after = Pt(0)
             
@@ -266,11 +268,12 @@ def build_resume(role):
             
             # Set right-aligned tab stop at right margin
             tab_stops = job_para.paragraph_format.tab_stops
-            tab_stops.add_tab_stop(Inches(7.5), WD_TAB_ALIGNMENT.RIGHT)
+            tab_stops.add_tab_stop(Inches(7.7), WD_TAB_ALIGNMENT.RIGHT)
             
             # Bullets (7.5pt, Georgia)
             for bullet in exp["bullets"]:
                 bullet_para = doc.add_paragraph(style='List Bullet')
+                bullet_para.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
                 bullet_para.paragraph_format.space_before = Pt(0)
                 bullet_para.paragraph_format.space_after = Pt(0)
                 bullet_para.paragraph_format.line_spacing = 1.0
@@ -329,11 +332,12 @@ def build_resume(role):
             
             # Set right-aligned tab stop at right margin
             tab_stops = proj_para.paragraph_format.tab_stops
-            tab_stops.add_tab_stop(Inches(7.5), WD_TAB_ALIGNMENT.RIGHT)
+            tab_stops.add_tab_stop(Inches(7.7), WD_TAB_ALIGNMENT.RIGHT)
             
             # Bullets (7.5pt, Georgia)
             for bullet in proj["bullets"]:
                 bullet_para = doc.add_paragraph(style='List Bullet')
+                bullet_para.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
                 bullet_para.paragraph_format.space_before = Pt(0)
                 bullet_para.paragraph_format.space_after = Pt(0)
                 bullet_para.paragraph_format.line_spacing = 1.0
@@ -379,7 +383,7 @@ def build_resume(role):
             
             # Set right-aligned tab stop at right margin
             tab_stops = degree_para.paragraph_format.tab_stops
-            tab_stops.add_tab_stop(Inches(7.5), WD_TAB_ALIGNMENT.RIGHT)
+            tab_stops.add_tab_stop(Inches(7.7), WD_TAB_ALIGNMENT.RIGHT)
             
             # Institution Line (Regular, 7.5pt, Georgia)
             inst_para = doc.add_paragraph()
