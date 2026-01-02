@@ -14,22 +14,26 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 
-def set_cell_border(cell, **kwargs):
+def add_horizontal_line(doc):
     """
-    Set cell borders (unused for now, but useful for tables if needed)
+    Add a horizontal line (section divider) to the document
     """
-    tc = cell._tc
-    tcPr = tc.get_or_add_tcPr()
+    para = doc.add_paragraph()
+    pPr = para._p.get_or_add_pPr()
     
-    for edge in ('top', 'left', 'bottom', 'right'):
-        edge_data = kwargs.get(edge)
-        if edge_data:
-            tag = 'tc{}'.format(edge.capitalize())
-            element = OxmlElement('w:{}'.format(tag))
-            for key in ["sz", "val", "color", "space"]:
-                if key in edge_data:
-                    element.set(qn('w:{}'.format(key)), str(edge_data[key]))
-            tcPr.append(element)
+    # Add bottom border to create a horizontal line
+    pBdr = OxmlElement('w:pBdr')
+    bottom = OxmlElement('w:bottom')
+    bottom.set(qn('w:val'), 'single')
+    bottom.set(qn('w:sz'), '6')  # Line thickness
+    bottom.set(qn('w:space'), '1')
+    bottom.set(qn('w:color'), '000000')  # Black color
+    pBdr.append(bottom)
+    pPr.append(pBdr)
+    
+    para.paragraph_format.space_before = Pt(6)
+    para.paragraph_format.space_after = Pt(0)
+    return para
 
 
 def add_hyperlink(paragraph, text, url):
@@ -47,6 +51,17 @@ def add_hyperlink(paragraph, text, url):
     # Create run
     new_run = OxmlElement('w:r')
     rPr = OxmlElement('w:rPr')
+    
+    # Set font
+    rFonts = OxmlElement('w:rFonts')
+    rFonts.set(qn('w:ascii'), 'Georgia')
+    rFonts.set(qn('w:hAnsi'), 'Georgia')
+    rPr.append(rFonts)
+    
+    # Set font size (7.5pt = 15 half-points)
+    sz = OxmlElement('w:sz')
+    sz.set(qn('w:val'), '15')
+    rPr.append(sz)
     
     # Set underline
     u = OxmlElement('w:u')
@@ -95,8 +110,8 @@ def apply_bold_to_text(paragraph, text):
         if not part:
             continue
         run = paragraph.add_run(part)
-        run.font.name = 'Calibri'
-        run.font.size = Pt(11)
+        run.font.name = 'Georgia'
+        run.font.size = Pt(7.5)
         
         # Odd indices are the bolded parts
         if i % 2 == 1:
@@ -116,46 +131,55 @@ def build_resume(role):
     doc = Document()
     
     # ===========================
-    # DOCUMENT MARGINS (0.5 inch)
+    # DOCUMENT MARGINS (0.4 inch)
     # ===========================
     section = doc.sections[0]
-    section.top_margin = Inches(0.5)
-    section.bottom_margin = Inches(0.5)
-    section.left_margin = Inches(0.5)
-    section.right_margin = Inches(0.5)
+    section.top_margin = Inches(0.4)
+    section.bottom_margin = Inches(0.4)
+    section.left_margin = Inches(0.4)
+    section.right_margin = Inches(0.4)
     
     # ===========================
     # HEADER SECTION
     # ===========================
     personal = data["personal"]
     
-    # Name and Title (Bold, 14pt)
+    # Name and Title (Bold, 12pt, Georgia)
     header = doc.add_paragraph()
     header.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
     name_run = header.add_run(f"{personal['name']} | {personal['title']}")
     name_run.bold = True
-    name_run.font.name = 'Calibri'
-    name_run.font.size = Pt(14)
-    header.paragraph_format.space_after = Pt(2)
+    name_run.font.name = 'Georgia'
+    name_run.font.size = Pt(12)
+    header.paragraph_format.space_after = Pt(0)
     header.paragraph_format.space_before = Pt(0)
     
-    # Contact Info (Regular, 10pt)
+    # Contact Info (Regular, 7.5pt, Georgia)
     contact = doc.add_paragraph()
     contact.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+    contact.paragraph_format.space_before = Pt(4)
+    contact.paragraph_format.space_after = Pt(0)
+    
     contact_text = f"{personal['location']} | {personal['email']} | {personal['phone']} | "
     contact_run = contact.add_run(contact_text)
-    contact_run.font.name = 'Calibri'
-    contact_run.font.size = Pt(10)
+    contact_run.font.name = 'Georgia'
+    contact_run.font.size = Pt(7.5)
     
     # Add hyperlinks for LinkedIn, GitHub, Website
     add_hyperlink(contact, personal['linkedin'], f"https://{personal['linkedin']}")
-    contact.add_run(" | ").font.size = Pt(10)
+    pipe1 = contact.add_run(" | ")
+    pipe1.font.name = 'Georgia'
+    pipe1.font.size = Pt(7.5)
+    
     add_hyperlink(contact, personal['github'], f"https://{personal['github']}")
-    contact.add_run(" | ").font.size = Pt(10)
+    pipe2 = contact.add_run(" | ")
+    pipe2.font.name = 'Georgia'
+    pipe2.font.size = Pt(7.5)
+    
     add_hyperlink(contact, personal['website'], f"https://{personal['website']}")
     
-    contact.paragraph_format.space_after = Pt(8)
-    contact.paragraph_format.space_before = Pt(0)
+    # Add section divider after header
+    add_horizontal_line(doc)
     
     # ===========================
     # SUMMARY SECTION
@@ -163,23 +187,28 @@ def build_resume(role):
     summary_items = filter_by_tags(data["summary"], role)
     
     if summary_items:
-        # Section Header
+        # Section Header (Bold, 8pt, Georgia)
         summary_header = doc.add_paragraph()
         summary_header_run = summary_header.add_run("SUMMARY")
         summary_header_run.bold = True
-        summary_header_run.font.name = 'Calibri'
-        summary_header_run.font.size = Pt(12)
-        summary_header.paragraph_format.space_after = Pt(4)
+        summary_header_run.font.name = 'Georgia'
+        summary_header_run.font.size = Pt(8)
+        summary_header.paragraph_format.space_after = Pt(0)
         summary_header.paragraph_format.space_before = Pt(6)
         
-        # Summary text as continuous paragraph
+        # Summary text as continuous paragraph (7.5pt, Georgia)
         summary_para = doc.add_paragraph()
+        summary_para.paragraph_format.space_before = Pt(4)
+        summary_para.paragraph_format.space_after = Pt(0)
+        summary_para.paragraph_format.line_spacing = 1.0
+        
         summary_text = " ".join([item["text"] for item in summary_items])
         summary_run = summary_para.add_run(summary_text)
-        summary_run.font.name = 'Calibri'
-        summary_run.font.size = Pt(11)
-        summary_para.paragraph_format.space_after = Pt(8)
-        summary_para.paragraph_format.line_spacing = 1.15
+        summary_run.font.name = 'Georgia'
+        summary_run.font.size = Pt(7.5)
+        
+        # Add section divider after summary
+        add_horizontal_line(doc)
     
     # ===========================
     # EXPERIENCE SECTION
@@ -197,42 +226,46 @@ def build_resume(role):
             })
     
     if experience_items:
-        # Section Header
+        # Section Header (Bold, 8pt, Georgia)
         exp_header = doc.add_paragraph()
         exp_header_run = exp_header.add_run("EXPERIENCE")
         exp_header_run.bold = True
-        exp_header_run.font.name = 'Calibri'
-        exp_header_run.font.size = Pt(12)
-        exp_header.paragraph_format.space_after = Pt(4)
+        exp_header_run.font.name = 'Georgia'
+        exp_header_run.font.size = Pt(8)
+        exp_header.paragraph_format.space_after = Pt(0)
         exp_header.paragraph_format.space_before = Pt(6)
         
         for exp in experience_items:
-            # Job Title Line: Role | Company (Location) Dates
+            # Job Title Line: Role | Company (Location) Dates (Bold, 7.5pt, Georgia)
             job_para = doc.add_paragraph()
+            job_para.paragraph_format.space_before = Pt(4)
+            job_para.paragraph_format.space_after = Pt(0)
+            
             job_run = job_para.add_run(f"{exp['role']} | {exp['company']}")
             job_run.bold = True
-            job_run.font.name = 'Calibri'
-            job_run.font.size = Pt(11)
+            job_run.font.name = 'Georgia'
+            job_run.font.size = Pt(7.5)
             
             location_run = job_para.add_run(f" ({exp['location']}) ")
-            location_run.font.name = 'Calibri'
-            location_run.font.size = Pt(11)
+            location_run.font.name = 'Georgia'
+            location_run.font.size = Pt(7.5)
             
             dates_run = job_para.add_run(exp['dates'])
             dates_run.bold = True
-            dates_run.font.name = 'Calibri'
-            dates_run.font.size = Pt(11)
+            dates_run.font.name = 'Georgia'
+            dates_run.font.size = Pt(7.5)
             
-            job_para.paragraph_format.space_after = Pt(2)
-            job_para.paragraph_format.space_before = Pt(6)
-            
-            # Bullets
+            # Bullets (7.5pt, Georgia)
             for bullet in exp["bullets"]:
                 bullet_para = doc.add_paragraph(style='List Bullet')
-                apply_bold_to_text(bullet_para, bullet["text"])
-                bullet_para.paragraph_format.space_after = Pt(2)
-                bullet_para.paragraph_format.line_spacing = 1.15
+                bullet_para.paragraph_format.space_before = Pt(4)
+                bullet_para.paragraph_format.space_after = Pt(0)
+                bullet_para.paragraph_format.line_spacing = 1.0
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
+                apply_bold_to_text(bullet_para, bullet["text"])
+        
+        # Add section divider after experience
+        add_horizontal_line(doc)
     
     # ===========================
     # PROJECTS SECTION
@@ -249,42 +282,46 @@ def build_resume(role):
             })
     
     if project_items:
-        # Section Header
+        # Section Header (Bold, 8pt, Georgia)
         proj_header = doc.add_paragraph()
         proj_header_run = proj_header.add_run("PROJECTS")
         proj_header_run.bold = True
-        proj_header_run.font.name = 'Calibri'
-        proj_header_run.font.size = Pt(12)
-        proj_header.paragraph_format.space_after = Pt(4)
+        proj_header_run.font.name = 'Georgia'
+        proj_header_run.font.size = Pt(8)
+        proj_header.paragraph_format.space_after = Pt(0)
         proj_header.paragraph_format.space_before = Pt(6)
         
         for proj in project_items:
-            # Project Title Line: Name | Tech Stack Dates
+            # Project Title Line: Name | Tech Stack Dates (7.5pt, Georgia)
             proj_para = doc.add_paragraph()
+            proj_para.paragraph_format.space_before = Pt(4)
+            proj_para.paragraph_format.space_after = Pt(0)
+            
             name_run = proj_para.add_run(f"{proj['name']} | ")
             name_run.bold = True
-            name_run.font.name = 'Calibri'
-            name_run.font.size = Pt(11)
+            name_run.font.name = 'Georgia'
+            name_run.font.size = Pt(7.5)
             
             tech_run = proj_para.add_run(proj['tech_stack'])
-            tech_run.font.name = 'Calibri'
-            tech_run.font.size = Pt(11)
+            tech_run.font.name = 'Georgia'
+            tech_run.font.size = Pt(7.5)
             
             dates_run = proj_para.add_run(f" {proj['dates']}")
             dates_run.bold = True
-            dates_run.font.name = 'Calibri'
-            dates_run.font.size = Pt(11)
+            dates_run.font.name = 'Georgia'
+            dates_run.font.size = Pt(7.5)
             
-            proj_para.paragraph_format.space_after = Pt(2)
-            proj_para.paragraph_format.space_before = Pt(6)
-            
-            # Bullets
+            # Bullets (7.5pt, Georgia)
             for bullet in proj["bullets"]:
                 bullet_para = doc.add_paragraph(style='List Bullet')
-                apply_bold_to_text(bullet_para, bullet["text"])
-                bullet_para.paragraph_format.space_after = Pt(2)
-                bullet_para.paragraph_format.line_spacing = 1.15
+                bullet_para.paragraph_format.space_before = Pt(4)
+                bullet_para.paragraph_format.space_after = Pt(0)
+                bullet_para.paragraph_format.line_spacing = 1.0
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
+                apply_bold_to_text(bullet_para, bullet["text"])
+        
+        # Add section divider after projects
+        add_horizontal_line(doc)
     
     # ===========================
     # EDUCATION SECTION
@@ -292,31 +329,37 @@ def build_resume(role):
     education_items = filter_by_tags(data["education"], role)
     
     if education_items:
-        # Section Header
+        # Section Header (Bold, 8pt, Georgia)
         edu_header = doc.add_paragraph()
         edu_header_run = edu_header.add_run("EDUCATION")
         edu_header_run.bold = True
-        edu_header_run.font.name = 'Calibri'
-        edu_header_run.font.size = Pt(12)
-        edu_header.paragraph_format.space_after = Pt(4)
+        edu_header_run.font.name = 'Georgia'
+        edu_header_run.font.size = Pt(8)
+        edu_header.paragraph_format.space_after = Pt(0)
         edu_header.paragraph_format.space_before = Pt(6)
         
         for edu in education_items:
-            # Degree Line (Bold)
+            # Degree Line (Bold, 7.5pt, Georgia)
             degree_para = doc.add_paragraph()
+            degree_para.paragraph_format.space_before = Pt(4)
+            degree_para.paragraph_format.space_after = Pt(0)
+            
             degree_run = degree_para.add_run(f"{edu['degree']} {edu['dates']}")
             degree_run.bold = True
-            degree_run.font.name = 'Calibri'
-            degree_run.font.size = Pt(11)
-            degree_para.paragraph_format.space_after = Pt(2)
-            degree_para.paragraph_format.space_before = Pt(6)
+            degree_run.font.name = 'Georgia'
+            degree_run.font.size = Pt(7.5)
             
-            # Institution Line (Regular)
+            # Institution Line (Regular, 7.5pt, Georgia)
             inst_para = doc.add_paragraph()
+            inst_para.paragraph_format.space_before = Pt(4)
+            inst_para.paragraph_format.space_after = Pt(0)
+            
             inst_run = inst_para.add_run(f"{edu['institution']} ({edu['location']})")
-            inst_run.font.name = 'Calibri'
-            inst_run.font.size = Pt(11)
-            inst_para.paragraph_format.space_after = Pt(4)
+            inst_run.font.name = 'Georgia'
+            inst_run.font.size = Pt(7.5)
+        
+        # Add section divider after education
+        add_horizontal_line(doc)
     
     # ===========================
     # SKILLS SECTION
@@ -330,38 +373,48 @@ def build_resume(role):
             skill_items.append(skill_cat)
     
     if skill_items:
-        # Section Header
+        # Section Header (Bold, 8pt, Georgia)
         skills_header = doc.add_paragraph()
         skills_header_run = skills_header.add_run("SKILLS")
         skills_header_run.bold = True
-        skills_header_run.font.name = 'Calibri'
-        skills_header_run.font.size = Pt(12)
-        skills_header.paragraph_format.space_after = Pt(4)
+        skills_header_run.font.name = 'Georgia'
+        skills_header_run.font.size = Pt(8)
+        skills_header.paragraph_format.space_after = Pt(0)
         skills_header.paragraph_format.space_before = Pt(6)
         
         for skill_cat in skill_items:
             skill_para = doc.add_paragraph()
+            skill_para.paragraph_format.space_before = Pt(4)
+            skill_para.paragraph_format.space_after = Pt(0)
+            skill_para.paragraph_format.line_spacing = 1.0
+            
             label_run = skill_para.add_run(f"{skill_cat['label']}: ")
             label_run.bold = True
-            label_run.font.name = 'Calibri'
-            label_run.font.size = Pt(11)
+            label_run.font.name = 'Georgia'
+            label_run.font.size = Pt(7.5)
             
             items_run = skill_para.add_run(", ".join(skill_cat['items']))
-            items_run.font.name = 'Calibri'
-            items_run.font.size = Pt(11)
-            
-            skill_para.paragraph_format.space_after = Pt(2)
-            skill_para.paragraph_format.line_spacing = 1.15
+            items_run.font.name = 'Georgia'
+            items_run.font.size = Pt(7.5)
     
     # ===========================
-    # SAVE DOCUMENT
+    # SAVE DOCUMENT WITH VERSIONING
     # ===========================
     os.makedirs("outputs", exist_ok=True)
-    output_path = f"outputs/resume_{role}.docx"
+    
+    # Find the next available version number
+    version = 1
+    while True:
+        output_path = f"outputs/resume_{role}_{version}.docx"
+        if not os.path.exists(output_path):
+            break
+        version += 1
+    
     doc.save(output_path)
     
     print(f"✅ Generated resume for role: {role}")
     print(f"📄 Output: {output_path}")
+    print(f"🔢 Version: {version}")
     return output_path
 
 
