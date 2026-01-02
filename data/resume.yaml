@@ -1,0 +1,32 @@
+name: Nishant Gada
+title: Software Engineer
+email: gada.ni@northeastern.edu
+linkedin: linkedin.com/in/nishantgada
+github: github.com/nishantgada
+phone: +1(857)398-8994
+website: nishantgada.netlify.app
+
+summary:
+  - text: "Software Engineer experienced in scalable backend and full-stack systems."
+    tags: [python, java, fullstack]
+  - text: "Cloud-native development and system design focus."
+    tags: [cloud, backend, java]
+
+experience:
+  - company: Company A
+    role: Software Engineer
+    dates: "Jan 2023 – Present"
+    bullets:
+      - text: "Designed REST APIs using Spring Boot and Hibernate."
+        tags: [java, backend, fullstack]
+      - text: "Built ETL pipelines using Python for data processing."
+        tags: [python, backend]
+      - text: "Developed React dashboards with REST integrations."
+        tags: [frontend, fullstack]
+
+skills:
+  python: [Python, Flask, FastAPI]
+  java: [Java, Spring Boot, Hibernate]
+  frontend: [React, JavaScript, HTML, CSS]
+  fullstack: [REST APIs, System Design]
+  cloud: [AWS, Docker]
