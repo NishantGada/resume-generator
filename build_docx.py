@@ -9,7 +9,7 @@ import sys
 import os
 from docx import Document
 from docx.shared import Pt, Inches, RGBColor
-from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT, WD_TAB_ALIGNMENT
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
@@ -31,8 +31,14 @@ def add_horizontal_line(doc):
     pBdr.append(bottom)
     pPr.append(pBdr)
     
-    para.paragraph_format.space_before = Pt(6)
+    # Minimal spacing - roughly 11pt Cambria equivalent
+    para.paragraph_format.space_before = Pt(0)
     para.paragraph_format.space_after = Pt(0)
+    
+    # Set small font size to reduce line height
+    run = para.add_run()
+    run.font.size = Pt(2)
+    
     return para
 
 
@@ -144,9 +150,9 @@ def build_resume(role):
     # ===========================
     personal = data["personal"]
     
-    # Name and Title (Bold, 12pt, Georgia)
+    # Name and Title (Bold, 12pt, Georgia, CENTER ALIGNED)
     header = doc.add_paragraph()
-    header.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
+    header.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
     name_run = header.add_run(f"{personal['name']} | {personal['title']}")
     name_run.bold = True
     name_run.font.name = 'Georgia'
@@ -236,29 +242,37 @@ def build_resume(role):
         exp_header.paragraph_format.space_before = Pt(6)
         
         for exp in experience_items:
-            # Job Title Line: Role | Company (Location) Dates (Bold, 7.5pt, Georgia)
+            # Job Title Line with RIGHT-ALIGNED dates
             job_para = doc.add_paragraph()
             job_para.paragraph_format.space_before = Pt(4)
             job_para.paragraph_format.space_after = Pt(0)
             
+            # Add role and company on left
             job_run = job_para.add_run(f"{exp['role']} | {exp['company']}")
             job_run.bold = True
             job_run.font.name = 'Georgia'
             job_run.font.size = Pt(7.5)
             
-            location_run = job_para.add_run(f" ({exp['location']}) ")
+            location_run = job_para.add_run(f" ({exp['location']})")
             location_run.font.name = 'Georgia'
             location_run.font.size = Pt(7.5)
+            
+            # Add tab to push dates to the right
+            job_para.add_run('\t')
             
             dates_run = job_para.add_run(exp['dates'])
             dates_run.bold = True
             dates_run.font.name = 'Georgia'
             dates_run.font.size = Pt(7.5)
             
+            # Set right-aligned tab stop at right margin
+            tab_stops = job_para.paragraph_format.tab_stops
+            tab_stops.add_tab_stop(Inches(7.5), WD_TAB_ALIGNMENT.RIGHT)
+            
             # Bullets (7.5pt, Georgia)
             for bullet in exp["bullets"]:
                 bullet_para = doc.add_paragraph(style='List Bullet')
-                bullet_para.paragraph_format.space_before = Pt(4)
+                # bullet_para.paragraph_format.space_before = Pt(4)
                 bullet_para.paragraph_format.space_after = Pt(0)
                 bullet_para.paragraph_format.line_spacing = 1.0
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
@@ -292,7 +306,7 @@ def build_resume(role):
         proj_header.paragraph_format.space_before = Pt(6)
         
         for proj in project_items:
-            # Project Title Line: Name | Tech Stack Dates (7.5pt, Georgia)
+            # Project Title Line with RIGHT-ALIGNED dates
             proj_para = doc.add_paragraph()
             proj_para.paragraph_format.space_before = Pt(4)
             proj_para.paragraph_format.space_after = Pt(0)
@@ -306,10 +320,17 @@ def build_resume(role):
             tech_run.font.name = 'Georgia'
             tech_run.font.size = Pt(7.5)
             
-            dates_run = proj_para.add_run(f" {proj['dates']}")
+            # Add tab to push dates to the right
+            proj_para.add_run('\t')
+            
+            dates_run = proj_para.add_run(proj['dates'])
             dates_run.bold = True
             dates_run.font.name = 'Georgia'
             dates_run.font.size = Pt(7.5)
+            
+            # Set right-aligned tab stop at right margin
+            tab_stops = proj_para.paragraph_format.tab_stops
+            tab_stops.add_tab_stop(Inches(7.5), WD_TAB_ALIGNMENT.RIGHT)
             
             # Bullets (7.5pt, Georgia)
             for bullet in proj["bullets"]:
@@ -339,15 +360,27 @@ def build_resume(role):
         edu_header.paragraph_format.space_before = Pt(6)
         
         for edu in education_items:
-            # Degree Line (Bold, 7.5pt, Georgia)
+            # Degree Line with RIGHT-ALIGNED dates (Bold, 7.5pt, Georgia)
             degree_para = doc.add_paragraph()
             degree_para.paragraph_format.space_before = Pt(4)
             degree_para.paragraph_format.space_after = Pt(0)
             
-            degree_run = degree_para.add_run(f"{edu['degree']} {edu['dates']}")
+            degree_run = degree_para.add_run(f"{edu['degree']}")
             degree_run.bold = True
             degree_run.font.name = 'Georgia'
             degree_run.font.size = Pt(7.5)
+            
+            # Add tab to push dates to the right
+            degree_para.add_run('\t')
+            
+            dates_run = degree_para.add_run(edu['dates'])
+            dates_run.bold = True
+            dates_run.font.name = 'Georgia'
+            dates_run.font.size = Pt(7.5)
+            
+            # Set right-aligned tab stop at right margin
+            tab_stops = degree_para.paragraph_format.tab_stops
+            tab_stops.add_tab_stop(Inches(7.5), WD_TAB_ALIGNMENT.RIGHT)
             
             # Institution Line (Regular, 7.5pt, Georgia)
             inst_para = doc.add_paragraph()
