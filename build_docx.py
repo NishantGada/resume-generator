@@ -180,9 +180,7 @@ def build_resume(role):
     pipe2.font.size = Pt(7.5)
     
     add_hyperlink(contact, personal['website'], f"https://{personal['website']}")
-    
-    # Add section divider after header
-    add_horizontal_line(doc)
+
     
     # ===========================
     # SUMMARY SECTION
@@ -198,6 +196,9 @@ def build_resume(role):
         summary_header_run.font.size = Pt(8)
         summary_header.paragraph_format.space_after = Pt(0)
         summary_header.paragraph_format.space_before = Pt(6)
+
+        # Add section divider after summary
+        add_horizontal_line(doc)
         
         # Summary text as continuous paragraph (7.5pt, Georgia)
         summary_para = doc.add_paragraph()
@@ -209,9 +210,7 @@ def build_resume(role):
         summary_run = summary_para.add_run(summary_text)
         summary_run.font.name = 'Georgia'
         summary_run.font.size = Pt(7.5)
-        
-        # Add section divider after summary
-        add_horizontal_line(doc)
+
     
     # ===========================
     # EXPERIENCE SECTION
@@ -272,7 +271,7 @@ def build_resume(role):
             # Bullets (7.5pt, Georgia)
             for bullet in exp["bullets"]:
                 bullet_para = doc.add_paragraph(style='List Bullet')
-                bullet_para.paragraph_format.space_before = Pt(4)
+                bullet_para.paragraph_format.space_before = Pt(0)
                 bullet_para.paragraph_format.space_after = Pt(0)
                 bullet_para.paragraph_format.line_spacing = 1.0
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
@@ -335,7 +334,7 @@ def build_resume(role):
             # Bullets (7.5pt, Georgia)
             for bullet in proj["bullets"]:
                 bullet_para = doc.add_paragraph(style='List Bullet')
-                bullet_para.paragraph_format.space_before = Pt(4)
+                bullet_para.paragraph_format.space_before = Pt(0)
                 bullet_para.paragraph_format.space_after = Pt(0)
                 bullet_para.paragraph_format.line_spacing = 1.0
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
@@ -384,7 +383,7 @@ def build_resume(role):
             
             # Institution Line (Regular, 7.5pt, Georgia)
             inst_para = doc.add_paragraph()
-            inst_para.paragraph_format.space_before = Pt(4)
+            inst_para.paragraph_format.space_before = Pt(0)
             inst_para.paragraph_format.space_after = Pt(0)
             
             inst_run = inst_para.add_run(f"{edu['institution']} ({edu['location']})")
@@ -417,7 +416,7 @@ def build_resume(role):
         
         for skill_cat in skill_items:
             skill_para = doc.add_paragraph()
-            skill_para.paragraph_format.space_before = Pt(4)
+            skill_para.paragraph_format.space_before = Pt(0)
             skill_para.paragraph_format.space_after = Pt(0)
             skill_para.paragraph_format.line_spacing = 1.0
             
