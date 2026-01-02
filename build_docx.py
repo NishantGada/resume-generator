@@ -31,13 +31,10 @@ def add_horizontal_line(doc):
     pBdr.append(bottom)
     pPr.append(pBdr)
     
-    # Minimal spacing - roughly 11pt Cambria equivalent
+    # ZERO spacing
     para.paragraph_format.space_before = Pt(0)
     para.paragraph_format.space_after = Pt(0)
-    
-    # Set small font size to reduce line height
-    run = para.add_run()
-    run.font.size = Pt(2)
+    para.paragraph_format.line_spacing = 0.01  # Almost no line height
     
     return para
 
@@ -241,6 +238,9 @@ def build_resume(role):
         exp_header.paragraph_format.space_after = Pt(0)
         exp_header.paragraph_format.space_before = Pt(6)
         
+        # Add section divider immediately after header
+        add_horizontal_line(doc)
+        
         for exp in experience_items:
             # Job Title Line with RIGHT-ALIGNED dates
             job_para = doc.add_paragraph()
@@ -272,14 +272,11 @@ def build_resume(role):
             # Bullets (7.5pt, Georgia)
             for bullet in exp["bullets"]:
                 bullet_para = doc.add_paragraph(style='List Bullet')
-                # bullet_para.paragraph_format.space_before = Pt(4)
+                bullet_para.paragraph_format.space_before = Pt(4)
                 bullet_para.paragraph_format.space_after = Pt(0)
                 bullet_para.paragraph_format.line_spacing = 1.0
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
                 apply_bold_to_text(bullet_para, bullet["text"])
-        
-        # Add section divider after experience
-        add_horizontal_line(doc)
     
     # ===========================
     # PROJECTS SECTION
@@ -304,6 +301,9 @@ def build_resume(role):
         proj_header_run.font.size = Pt(8)
         proj_header.paragraph_format.space_after = Pt(0)
         proj_header.paragraph_format.space_before = Pt(6)
+        
+        # Add section divider immediately after header
+        add_horizontal_line(doc)
         
         for proj in project_items:
             # Project Title Line with RIGHT-ALIGNED dates
@@ -340,9 +340,6 @@ def build_resume(role):
                 bullet_para.paragraph_format.line_spacing = 1.0
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
                 apply_bold_to_text(bullet_para, bullet["text"])
-        
-        # Add section divider after projects
-        add_horizontal_line(doc)
     
     # ===========================
     # EDUCATION SECTION
@@ -358,6 +355,9 @@ def build_resume(role):
         edu_header_run.font.size = Pt(8)
         edu_header.paragraph_format.space_after = Pt(0)
         edu_header.paragraph_format.space_before = Pt(6)
+        
+        # Add section divider immediately after header
+        add_horizontal_line(doc)
         
         for edu in education_items:
             # Degree Line with RIGHT-ALIGNED dates (Bold, 7.5pt, Georgia)
@@ -390,9 +390,6 @@ def build_resume(role):
             inst_run = inst_para.add_run(f"{edu['institution']} ({edu['location']})")
             inst_run.font.name = 'Georgia'
             inst_run.font.size = Pt(7.5)
-        
-        # Add section divider after education
-        add_horizontal_line(doc)
     
     # ===========================
     # SKILLS SECTION
@@ -414,6 +411,9 @@ def build_resume(role):
         skills_header_run.font.size = Pt(8)
         skills_header.paragraph_format.space_after = Pt(0)
         skills_header.paragraph_format.space_before = Pt(6)
+        
+        # Add section divider immediately after header
+        add_horizontal_line(doc)
         
         for skill_cat in skill_items:
             skill_para = doc.add_paragraph()
