@@ -72,9 +72,9 @@ def add_hyperlink(paragraph, text, url):
     rPr.append(u)
     
     # Set color to blue (optional, for visual hyperlink)
-    color = OxmlElement('w:color')
-    color.set(qn('w:val'), '0000FF')
-    rPr.append(color)
+    # color = OxmlElement('w:color')
+    # color.set(qn('w:val'), '0000FF')
+    # rPr.append(color)
     
     new_run.append(rPr)
     new_run.text = text
@@ -281,7 +281,7 @@ def build_resume(role):
                 bullet_para.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
                 bullet_para.paragraph_format.space_before = Pt(0)
                 bullet_para.paragraph_format.space_after = Pt(0)
-                bullet_para.paragraph_format.line_spacing = 1.0
+                bullet_para.paragraph_format.line_spacing = 1.25
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
                 apply_bold_to_text(bullet_para, bullet["text"])
     
@@ -344,8 +344,8 @@ def build_resume(role):
                 bullet_para = doc.add_paragraph(style='List Bullet')
                 bullet_para.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
                 bullet_para.paragraph_format.space_before = Pt(0)
-                bullet_para.paragraph_format.space_after = Pt(4)
-                bullet_para.paragraph_format.line_spacing = 1.0
+                bullet_para.paragraph_format.space_after = Pt(0)
+                bullet_para.paragraph_format.line_spacing = 1.25
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
                 apply_bold_to_text(bullet_para, bullet["text"])
     
