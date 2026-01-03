@@ -291,14 +291,17 @@ def build_resume(role):
     # ===========================
     project_items = []
     for proj in data["projects"]:
-        filtered_bullets = filter_by_tags(proj["bullets"], role)
-        if filtered_bullets:
-            project_items.append({
-                "name": proj["name"],
-                "tech_stack": proj["tech_stack"],
-                "dates": proj["dates"],
-                "bullets": filtered_bullets
-            })
+        # Check if project itself matches the role tags
+        proj_tags = proj.get("tags", [])
+        if "all" in proj_tags or role in proj_tags:
+            filtered_bullets = filter_by_tags(proj["bullets"], role)
+            if filtered_bullets:
+                project_items.append({
+                    "name": proj["name"],
+                    "tech_stack": proj["tech_stack"],
+                    "dates": proj["dates"],
+                    "bullets": filtered_bullets
+                })
     
     if project_items:
         # Section Header (Bold, 8pt, Georgia)

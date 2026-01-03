@@ -28,61 +28,72 @@ experience:
     dates: "January 2025 - June 2025"
     bullets:
       - text: "Engineered core LMS migration services to third-party integrations using Python, Django REST Framework, React, and TypeScript to boost system reliability by 29% and user growth by 15%"
-        tags: [all, python, fullstack, backend, frontend]
+        tags: [all, python, java]
       - text: "Developed CI/CD pipelines for staged deployments across 5+ cross-functional teams, cutting release time by 20% with less than 2% post-release issues"
-        tags: [all, python, java, backend, devops, cloud]
+        tags: [all, python, java]
       - text: "Contributed towards onboarding 3 partners onto the Home Equity Dashboard to improve customer loan journey and service integration"
-        tags: [all, python, fullstack, backend]
+        tags: [all, python, java]
       - text: "Drove static typing adoption using TypeScript and Pydantic, ensured code quality via **100+ code reviews**, and introduced reusable design patterns"
-        tags: [all, python, fullstack, backend, frontend]
+        tags: [all, python, java]
       - text: "Leveraged test-driven development (TDD) to increase test coverage from **73% to 86%** by adding unit, integration, regression, and end-to-end tests using Pytest, Jest, and Cypress, preventing regression failures"
-        tags: [all, python, fullstack, backend, frontend]
+        tags: [all, python, java]
 
   - company: "Think360.ai"
     role: "Software Engineer"
     location: "Mumbai, India"
     dates: "September 2021 - June 2023"
     bullets:
-      - text: "Built a secure, high-throughput KYC microservice using Python, Flask, SQL, and AWS--reducing identity verification time and processing delays by 23%"
-        tags: [all, python, backend, cloud]
+      - text: "Built a secure, high-throughput KYC microservice using Python, Flask, SQL, and AWS - reducing identity verification time and processing delays by 23%"
+        tags: [python]
+      - text: "Reconstructed the legacy KYC micro-service using Java, Spring Boot, SQL, and AWS - reducing identity verification time and processing delays by 23%"
+        tags: [java]
       - text: "**Bumped revenue by 27%** by improving system performance using domain-driven design, Redis caching, and Python-based code optimization"
-        tags: [all, python, backend, cloud]
-      - text: "Scaled a core microservice horizontally across three business verticals using Docker, Kafka-based asynchronous communication, and GitHub Actions CI/CD, resulting in a **36% improvement** in the client conversion funnel"
-        tags: [all, python, backend, cloud, devops]
+        tags: [python]
+      - text: "**Bumped revenue by 27%** by improving system performance using domain-driven design, Redis caching, and Java-based code optimizations"
+        tags: [java]
+      - text: "Scaled the micro-service horizontally across three business verticals using Docker, Kafka-based asynchronous communication, and GitHub Actions CI/CD, resulting in a **36% improvement** in the client conversion funnel"
+        tags: [python]
+      - text: "Scaled the micro-service horizontally across three business verticals using Docker, Kafka-based asynchronous communication, and GitHub Actions CI/CD, resulting in a **36% improvement** in the client conversion funnel"
+        tags: [java]
       - text: "Launched a Regulatory Audit Dashboard handling **3M+** daily active users under strict government compliance, cutting service response time by 22%"
-        tags: [all, python, fullstack, backend, cloud]
+        tags: [python, java]
       - text: "Led bi-weekly demos across product, engineering, and design teams to align delivery timelines, preempt release bottlenecks, and ensure seamless go-lives"
-        tags: [all, python, java, fullstack, backend]
+        tags: [python, java]
       - text: "Delivered a full-stack Loan Origination System (LOS) using Python, FastAPI, React, Redis, PostgreSQL, AWS to serve 100k+ users within 4 agile sprints"
-        tags: [all, python, fullstack, backend, cloud]
+        tags: [python]
+      - text: "Delivered a full-stack Loan Origination System (LOS) using **Java, Spring Boot, React, Redis, PostgreSQL, AWS** to serve 100k+ users within 4 agile sprints"
+        tags: [java]
 
   - company: "Accenture"
     role: "Associate Software Engineer"
     location: "Mumbai, India"
     dates: "June 2021 - September 2021"
     bullets:
-      - text: "Architected a cross-platform health analytics application using Python, Flask, GCP, and React Native; served 75K+ users and enabled real-time tracking of health metrics across Android and iOS applications"
-        tags: [all, python, fullstack, backend, cloud, mobile]
+      - text: "Architected a cross-platform health analytics application using Python, Flask, GCP, and React Native; served 75K+ users and enabled real-time tracking of health metrics across Android and iOS mobile applications"
+        tags: [python]
+      - text: "Architected a cross-platform health analytics application using Java, Spring Boot, GCP, React Native, and TypeScript to serve 75K+ users and enable real-time tracking of health metrics across Android and iOS mobile applications"
+        tags: [java]
       - text: "Optimized SQL query response time from **~112 seconds to ~6 seconds** through strategic indexing and optimization techniques, significantly improving data retrieval speed and overall user experience"
-        tags: [all, python, java, backend, database]
+        tags: [python, java]
 
   - company: "Nirol"
     role: "Full Stack Development Intern"
     location: "Mumbai, India"
     dates: "April 2020 - October 2020"
     bullets:
-      - text: "Designed a TikTok style video sharing social network while managing a team of 5 interns using Python, Django, GraphQL, React, Redux"
-        tags: [all, python, fullstack, backend, frontend]
-      - text: "Established core frontend and backend features via **asynchronous Django services and Redux state management** to track and display likes, comments, and follow/unfollow events to improve user interaction by 47%"
-        tags: [all, python, fullstack, backend, frontend]
-      - text: "Wrote and optimized **20+ GraphQL APIs** for user relationships and recommendation pipelines, leveraging data prefetching and query batching"
-        tags: [all, python, backend, fullstack]
+      - text: "Designed a YouTube style video sharing social network while managing a team of 5 interns using Python, Django, GraphQL, React, Redux"
+        tags: [python, java]
+      - text: "Established core frontend and backend features via **asynchronous Django services and Redux state management** to track and display likes, comments, and follow/unfollow events improving user interaction by 47%"
+        tags: [python, java]
+      - text: "Wrote and optimized **30+ GraphQL APIs** for user relationships and recommendation pipelines, leveraging data prefetching and query batching"
+        tags: [python, java]
 
 # Projects
 projects:
   - name: "Byte Blogs"
     tech_stack: "Node.js, Express, JavaScript, TypeScript, React, Chakra UI, AWS DynamoDB"
     dates: "October 2025 - Present"
+    tags: [javascript, python]
     bullets:
       - text: "Created a full-stack blogging platform using Node.js, Express, TypeScript, React, and AWS DynamoDB supporting content creation, versioning, and search"
         tags: [all, fullstack, backend, frontend, cloud]
@@ -90,10 +101,23 @@ projects:
         tags: [all, fullstack, backend, frontend]
       - text: "Integrated **JWT-based authentication** with stateless middleware and RBAC, securing 90% of API endpoints and simplifying user session management"
         tags: [all, fullstack, backend, cloud]
+  
+  - name: "URL Shortener"
+    tech_stack: "Java, Spring MVC, Spring Boot, SQL, JMeter, JUnit, Maven"
+    dates: "December 2025 - Present"
+    tags: [java]
+    bullets:
+      - text: "Created a URL shortening service using **Base62 encoding** with collision detection and retry logic, validated with JMeter load tests demonstrating **sub-50ms** response times under concurrent load"
+        tags: [java]
+      - text: "Implemented a MySQL database with composite indexes on short-codes and timestamps, tracking click analytics"
+        tags: [java]
+      - text: "Built RESTful endpoints with rate limiting (100 req/min per IP), request validation, and TTL-based expiration, with 302 redirects and Cache-Control headers"
+        tags: [java]
 
   - name: "Jiraffe"
     tech_stack: "Java, Spring Boot, Spring MVC, Hibernate ORM, MySQL, React"
     dates: "January 2024 - April 2024"
+    tags: [python, javascript, java]
     bullets:
       - text: "Pioneered a **Spring Boot-powered** bug tracking system with a React front-end, reducing bug resolution turnaround time from hours to minutes through streamlined reporting, assignment, and status tracking workflows"
         tags: [all, java, fullstack, backend, frontend]
@@ -103,6 +127,7 @@ projects:
   - name: "BostonTown"
     tech_stack: "React, Express, Node.js, NoSQL (MongoDB), Zustand, Ant Design"
     dates: "September 2023 - December 2023"
+    tags: [python, javascript, java]
     bullets:
       - text: "Directed a development team of 4 to create a property listing website for Boston with 300k+ properties using React and Node.js streamlining user connections and improving search efficiency for roommates, apartments, and agents"
         tags: [all, fullstack, backend, frontend]
@@ -127,45 +152,55 @@ education:
 skills:
   programming_languages:
     label: "Programming Languages"
-    items: ["Python", "Java", "JavaScript", "TypeScript", "C", "C++", "C#", "Go/Golang"]
-    tags: [all, python, java, fullstack, backend, frontend]
+    items: ["Python", "Java", "JavaScript", "TypeScript", "C", "C++", "Go/Golang"]
+    tags: [python]
+
+  programming_languages:
+    label: "Programming Languages"
+    items: ["Java", "Python", "JavaScript", "TypeScript", "C", "C++", "Go/Golang"]
+    tags: [java]
     
   frameworks:
     label: "Frameworks"
     items: ["Django REST Framework", "Flask", "Spring Boot", "FastAPI", "Hibernate"]
-    tags: [all, python, java, backend, fullstack]
+    tags: [python]
+  
+  frameworks:
+    label: "Frameworks"
+    items: ["Spring Boot", "Spring MVC", Hibernate", "Django REST Framework", "Flask", "FastAPI"]
+    tags: [java]
     
   databases:
     label: "Databases"
     items: ["SQL", "MySQL", "Postgres/PostgreSQL", "NoSQL", "MongoDB", "Redis", "Firebase Firestore", "Cassandra"]
-    tags: [all, python, java, backend, fullstack, database]
+    tags: [python, java]
     
   fullstack:
     label: "Full Stack"
     items: ["React", "Angular", "Vue", "Next.js", "Node.js", "Express", "Redux", "Zustand", "HTML", "CSS", "SCSS", "Vite"]
-    tags: [all, fullstack, frontend]
+    tags: [python, java]
     
   ui_ux:
     label: "UI/UX"
-    items: ["Tailwind CSS", "Bootstrap", "SCSS", "Ant Design", "Material UI", "Chakra UI", "Figma"]
-    tags: [all, fullstack, frontend]
+    items: ["Tailwind CSS", "Bootstrap", "SCSS", "Ant Design", "Material UI", "Chakra UI", "Figma", Shadcn]
+    tags: [python, java]
     
   mobile:
     label: "Mobile Applications"
     items: ["React-Native", "Flutter", "Swift"]
-    tags: [all, mobile, fullstack]
+    tags: [python, java]
     
   devops:
     label: "DevOps & CI/CD"
     items: ["Docker", "Jenkins", "Kubernetes", "GitHub Actions", "Terraform"]
-    tags: [all, devops, backend, cloud]
+    tags: [python, java]
     
   cloud:
     label: "Cloud Computing"
     items: ["Amazon Web Services (AWS)", "Google Cloud Platform (GCP)", "Microsoft Azure"]
-    tags: [all, cloud, backend, devops]
+    tags: [python, java]
     
   ai_tools:
     label: "AI Tools"
     items: ["ChatGPT", "GitHub Copilot", "CodeRabbit", "Claude", "Cursor"]
-    tags: [all, python, java, fullstack]
+    tags: [python, java]
