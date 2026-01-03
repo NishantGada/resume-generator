@@ -158,14 +158,14 @@ def build_resume(role):
     name_run = header.add_run(f"{personal['name']} | {personal['title']}")
     name_run.bold = True
     name_run.font.name = 'Georgia'
-    name_run.font.size = Pt(12)
+    name_run.font.size = Pt(11)
     header.paragraph_format.space_after = Pt(0)
     header.paragraph_format.space_before = Pt(0)
     
     # Contact Info (Regular, 7.5pt, Georgia)
     contact = doc.add_paragraph()
-    contact.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
-    contact.paragraph_format.space_before = Pt(4)
+    contact.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    contact.paragraph_format.space_before = Pt(0)
     contact.paragraph_format.space_after = Pt(0)
     
     contact_text = f"{personal['location']} | {personal['email']} | {personal['phone']} | "
@@ -210,7 +210,7 @@ def build_resume(role):
         summary_para.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
         summary_para.paragraph_format.space_before = Pt(4)
         summary_para.paragraph_format.space_after = Pt(0)
-        summary_para.paragraph_format.line_spacing = 1.0
+        summary_para.paragraph_format.line_spacing = 1.20
         
         summary_text = " ".join([item["text"] for item in summary_items])
         summary_run = summary_para.add_run(summary_text)
@@ -281,8 +281,9 @@ def build_resume(role):
                 bullet_para.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
                 bullet_para.paragraph_format.space_before = Pt(0)
                 bullet_para.paragraph_format.space_after = Pt(0)
-                bullet_para.paragraph_format.line_spacing = 1.25
+                bullet_para.paragraph_format.line_spacing = 1.20
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
+                bullet_para.paragraph_format.first_line_indent = Inches(-0.15)
                 apply_bold_to_text(bullet_para, bullet["text"])
     
     # ===========================
@@ -345,8 +346,9 @@ def build_resume(role):
                 bullet_para.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
                 bullet_para.paragraph_format.space_before = Pt(0)
                 bullet_para.paragraph_format.space_after = Pt(0)
-                bullet_para.paragraph_format.line_spacing = 1.25
+                bullet_para.paragraph_format.line_spacing = 1.20
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
+                bullet_para.paragraph_format.first_line_indent = Inches(-0.15)
                 apply_bold_to_text(bullet_para, bullet["text"])
     
     # ===========================
@@ -427,7 +429,7 @@ def build_resume(role):
             skill_para = doc.add_paragraph()
             skill_para.paragraph_format.space_before = Pt(0)
             skill_para.paragraph_format.space_after = Pt(0)
-            skill_para.paragraph_format.line_spacing = 1.0
+            skill_para.paragraph_format.line_spacing = 1.20
             
             label_run = skill_para.add_run(f"{skill_cat['label']}")
             label_run.bold = True
