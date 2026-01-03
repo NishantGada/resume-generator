@@ -133,6 +133,11 @@ def build_resume(role):
     # Create document
     doc = Document()
     
+    # Configure List Bullet style to have smaller bullets
+    bullet_style = doc.styles['List Bullet']
+    bullet_style.font.name = 'Georgia'
+    bullet_style.font.size = Pt(6)  # Smaller bullet size (6pt instead of 7.5pt)
+    
     # ===========================
     # DOCUMENT MARGINS (0.4 inch)
     # ===========================
@@ -266,7 +271,7 @@ def build_resume(role):
             dates_run.font.name = 'Georgia'
             dates_run.font.size = Pt(7.5)
             
-            # Set right-aligned tab stop at right margin
+            # Set right-aligned tab stop at right margin (8.5" page - 0.4" right margin = 8.1")
             tab_stops = job_para.paragraph_format.tab_stops
             tab_stops.add_tab_stop(Inches(7.7), WD_TAB_ALIGNMENT.RIGHT)
             
@@ -330,7 +335,7 @@ def build_resume(role):
             dates_run.font.name = 'Georgia'
             dates_run.font.size = Pt(7.5)
             
-            # Set right-aligned tab stop at right margin
+            # Set right-aligned tab stop at right margin (8.5" page - 0.4" right margin = 8.1")
             tab_stops = proj_para.paragraph_format.tab_stops
             tab_stops.add_tab_stop(Inches(7.7), WD_TAB_ALIGNMENT.RIGHT)
             
@@ -339,7 +344,7 @@ def build_resume(role):
                 bullet_para = doc.add_paragraph(style='List Bullet')
                 bullet_para.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
                 bullet_para.paragraph_format.space_before = Pt(0)
-                bullet_para.paragraph_format.space_after = Pt(0)
+                bullet_para.paragraph_format.space_after = Pt(4)
                 bullet_para.paragraph_format.line_spacing = 1.0
                 bullet_para.paragraph_format.left_indent = Inches(0.25)
                 apply_bold_to_text(bullet_para, bullet["text"])
@@ -381,7 +386,7 @@ def build_resume(role):
             dates_run.font.name = 'Georgia'
             dates_run.font.size = Pt(7.5)
             
-            # Set right-aligned tab stop at right margin
+            # Set right-aligned tab stop at right margin (8.5" page - 0.4" right margin = 8.1")
             tab_stops = degree_para.paragraph_format.tab_stops
             tab_stops.add_tab_stop(Inches(7.7), WD_TAB_ALIGNMENT.RIGHT)
             
@@ -424,14 +429,21 @@ def build_resume(role):
             skill_para.paragraph_format.space_after = Pt(0)
             skill_para.paragraph_format.line_spacing = 1.0
             
-            label_run = skill_para.add_run(f"{skill_cat['label']}: ")
+            label_run = skill_para.add_run(f"{skill_cat['label']}")
             label_run.bold = True
             label_run.font.name = 'Georgia'
             label_run.font.size = Pt(7.5)
             
+            # Add tab character to create space
+            skill_para.add_run('\t')
+            
             items_run = skill_para.add_run(", ".join(skill_cat['items']))
             items_run.font.name = 'Georgia'
             items_run.font.size = Pt(7.5)
+            
+            # Set tab stop at 2.5 inches for consistent alignment
+            tab_stops = skill_para.paragraph_format.tab_stops
+            tab_stops.add_tab_stop(Inches(2), WD_TAB_ALIGNMENT.LEFT)
     
     # ===========================
     # SAVE DOCUMENT WITH VERSIONING
